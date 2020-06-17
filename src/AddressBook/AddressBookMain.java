@@ -5,6 +5,7 @@ public class AddressBookMain {
     HashMap<String, Boolean> phoneNoDict = new HashMap<>();
     HashMap<String, List<Person>> personByCityDict = new HashMap<>();
     HashMap<String, List<Person>> personByStateDict = new HashMap<>();
+
     public void addPerson() {
         Scanner sc = new Scanner(System.in);
         String firstName = "", lastName = "", address = "", city = "", state = "", phoneNo = "";
@@ -165,7 +166,6 @@ public class AddressBookMain {
             }
         }
     }
-
     public void deletePerson(){
         String phoneNo;
         Scanner sc = new Scanner(System.in);
@@ -181,7 +181,7 @@ public class AddressBookMain {
         records.remove(index);
     }
 
-    class SortbyNameHelper implements Comparator<Person>
+    class sortByNameHelper implements Comparator<Person>
     {
         public int compare(Person a, Person b)
         {
@@ -199,8 +199,7 @@ public class AddressBookMain {
             }
         }
     }
-
-    class SortbyCityHelper implements Comparator<Person> {
+    class sortByCityHelper implements Comparator<Person> {
         public int compare(Person a, Person b) {
             String aCity = a.getCity();
             String bCity = b.getCity();
@@ -216,8 +215,7 @@ public class AddressBookMain {
             }
         }
     }
-
-    class SortbyStateHelper implements Comparator<Person> {
+    class sortByStateHelper implements Comparator<Person> {
         public int compare(Person a, Person b) {
             String aState = a.getState();
             String bState = b.getState();
@@ -233,8 +231,7 @@ public class AddressBookMain {
             }
         }
     }
-
-    class SortbyZipHelper implements Comparator<Person>
+    class sortByZipHelper implements Comparator<Person>
     {
         public int compare(Person a, Person b)
         {
@@ -252,67 +249,84 @@ public class AddressBookMain {
             }
         }
     }
-
-
-
-    public void SortbyName(){
-        Collections.sort(records, new SortbyNameHelper());
+    public void sortByName(){
+        Collections.sort(records, new sortByNameHelper());
+        PrintMailinglabelformat(records);
     }
 
-    public void SortbyCity(){
-        Collections.sort(records, new SortbyCityHelper());
+    public void sortByCity(){
+        Collections.sort(records, new sortByCityHelper());
+        PrintMailinglabelformat(records);
     }
-    public void SortbyState(){
-        Collections.sort(records, new SortbyStateHelper());
+    public void sortByState(){
+        Collections.sort(records, new sortByStateHelper());
+        PrintMailinglabelformat(records);
     }
-    public void SortbyZip(){
-        Collections.sort(records, new SortbyZipHelper());
+    public void sortByZip(){
+        Collections.sort(records, new sortByZipHelper());
+        PrintMailinglabelformat(records);
     }
 
-    public void searchInCity(String firstName,String city){
+    public void searchInCityOrState(String firstName,String value,int choice){
         boolean found=false;
-        for (String k : personByCityDict.keySet()) {
-            if(k.compareTo(city) == 0) {
-                List<Person> v = personByCityDict.get(k);
+        HashMap<String, List<Person>> commonDict;
+        if(choice==0){
+            commonDict=personByCityDict;
+        }
+        else{
+            commonDict=personByStateDict;
+        }
+        for (String k : commonDict.keySet()) {
+            if(k.compareTo(value) == 0) {
+                List<Person> v = commonDict.get(k);
                 for (int i = 0; i < v.size(); i++) {
                     if(v.get(i).getFirstName().compareTo(firstName) == 0) {
                         found = true;
                         System.out.println(v.get(i).getFirstName());
                         System.out.println(v.get(i).getLastName());
+                        System.out.println(v.get(i).getAddress());
+                        System.out.println(v.get(i).getPhoneNo());
                     }
                 }
             }
         }
         if(found != true){
-            System.out.println("Person not found in given city");
-        }
-    }
-
-    public void searchInState(String firstName,String state){
-        boolean found=false;
-        for (String k : personByStateDict.keySet()) {
-            if(k.compareTo(state) == 0) {
-                List<Person> v = personByStateDict.get(k);
-                for (int i = 0; i < v.size(); i++) {
-                    if(v.get(i).getFirstName().compareTo(firstName) == 0) {
-                        found = true;
-                        System.out.println(v.get(i).getFirstName());
-                        System.out.println(v.get(i).getLastName());
-                    }
-                }
+            if(choice==0) {
+                System.out.println("Person not found in given city");
+            }
+            else{
+                System.out.println("Person not found in given state");
             }
         }
-        if(found != true){
-            System.out.println("Person not found in given state");
+    }
+
+    public void PrintMailinglabelformat(List<Person> recordList){
+        int size = recordList.size();
+        for (int i = 0; i < size; i++){
+            System.out.println(recordList.get(i).getLastName() + " " + recordList.get(i).getFirstName());
+            System.out.println(recordList.get(i).getAddress());
+            System.out.println(recordList.get(i).getCity());
+            System.out.println(recordList.get(i).getState());
+            System.out.println(recordList.get(i).getZip());
+            System.out.println(recordList.get(i).getPhoneNo());
+            System.out.println("");
         }
     }
 
-
-    public static void main(String[] args) {
-        AddressBookMain obj = new AddressBookMain();
-        obj.addPerson();
-        obj.addPerson();
-        obj.searchInCity("kaustavi","kolkata");
-        obj.searchInState("kaustavi","WestBengal");
+    public void viewByCityOrState(int choice){
+        HashMap<String, List<Person>> commonDict;
+        if(choice==0){
+            commonDict = personByCityDict;
+        }
+        else{
+            commonDict = personByStateDict;
+        }
+        for (String k : commonDict.keySet()) {
+            List<Person> v = commonDict.get(k);
+                System.out.println(k);
+                PrintMailinglabelformat(v);
+                System.out.println("\n");
+        }
     }
+
 }
