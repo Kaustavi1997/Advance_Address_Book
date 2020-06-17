@@ -174,16 +174,81 @@ public class AddressBookMain {
         }
     }
 
+    class SortbyCityHelper implements Comparator<Person> {
+        public int compare(Person a, Person b) {
+            String aCity = a.getCity();
+            String bCity = b.getCity();
+
+            String aLastName = a.getLastName();
+            String bLastName = b.getLastName();
+
+            if (aCity.compareTo(bCity) == 0) {
+                return aLastName.compareTo(bLastName);
+            }
+            else{
+                return aCity.compareTo(bCity);
+            }
+        }
+    }
+
+    class SortbyStateHelper implements Comparator<Person> {
+        public int compare(Person a, Person b) {
+            String aState = a.getState();
+            String bState = b.getState();
+
+            String aLastName = a.getLastName();
+            String bLastName = b.getLastName();
+
+            if (aState.compareTo(bState) == 0) {
+                return aLastName.compareTo(bLastName);
+            }
+            else{
+                return aState.compareTo(bState);
+            }
+        }
+    }
+
+    class SortbyZipHelper implements Comparator<Person>
+    {
+        public int compare(Person a, Person b)
+        {
+            int aZip = a.getZip();
+            int bZip = b.getZip();
+
+            String aLastName = a.getLastName();
+            String bLastName = b.getLastName();
+
+            if (aZip - bZip == 0){
+                return aLastName.compareTo(bLastName);
+            }
+            else{
+                return aZip - bZip;
+            }
+        }
+    }
+
+
+
     public void SortbyName(){
         Collections.sort(records, new SortbyNameHelper());
+    }
+
+    public void SortbyCity(){
+        Collections.sort(records, new SortbyCityHelper());
+    }
+    public void SortbyState(){
+        Collections.sort(records, new SortbyStateHelper());
+    }
+    public void SortbyZip(){
+        Collections.sort(records, new SortbyZipHelper());
     }
 
 
     public static void main(String[] args) {
         AddressBookMain obj = new AddressBookMain();
         obj.addPerson();
-        obj.addPerson();
-        obj.SortbyName();
-
+        obj.SortbyCity();
+        obj.SortbyState();
+        obj.SortbyZip();
     }
 }
