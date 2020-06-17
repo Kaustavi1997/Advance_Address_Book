@@ -3,6 +3,8 @@ import java.util.*;
 public class AddressBookMain {
     List<Person> records = new ArrayList<Person> ();
     HashMap<String, Boolean> phoneNoDict = new HashMap<>();
+    HashMap<String, List<Person>> personByCityDict = new HashMap<>();
+    HashMap<String, List<Person>> personByStateDict = new HashMap<>();
     public void addPerson() {
         Scanner sc = new Scanner(System.in);
         String firstName = "", lastName = "", address = "", city = "", state = "", phoneNo = "";
@@ -31,6 +33,30 @@ public class AddressBookMain {
 
             Person p = new Person(firstName, lastName, address, city, state, zip, phoneNo);
             records.add(p);
+            if (personByCityDict.containsKey(city)) {
+                List<Person> existingList;
+                existingList = personByCityDict.get(city);
+                existingList.add(p);
+                personByCityDict.put(city,existingList);
+            }
+            else{
+                List<Person> emptyList = new ArrayList<Person> ();
+                emptyList.add(p);
+                personByCityDict.put(city,emptyList);
+            }
+
+            if (personByStateDict.containsKey(state)) {
+                List<Person> existingList;
+                existingList = personByStateDict.get(state);
+                existingList.add(p);
+                personByStateDict.put(state,existingList);
+            }
+            else{
+                List<Person> emptyList = new ArrayList<Person> ();
+                emptyList.add(p);
+                personByStateDict.put(state,emptyList);
+            }
+
             phoneNoDict.put(phoneNo, Boolean.TRUE);
             System.out.println("Added Successfully");
         }
@@ -247,8 +273,25 @@ public class AddressBookMain {
     public static void main(String[] args) {
         AddressBookMain obj = new AddressBookMain();
         obj.addPerson();
-        obj.SortbyCity();
-        obj.SortbyState();
-        obj.SortbyZip();
+        obj.addPerson();
+        obj.addPerson();
+        for (String k : obj.personByCityDict.keySet()) {
+            List<Person> v = obj.personByCityDict.get(k);
+            for(int i=0; i<v.size();i++){
+                System.out.println(k);
+                System.out.println(v.get(i).getFirstName());
+                System.out.println("\n");
+            }
+        }
+
+        for (String k : obj.personByStateDict.keySet()) {
+            List<Person> v = obj.personByStateDict.get(k);
+            for(int i=0; i<v.size();i++){
+                System.out.println(k);
+                System.out.println(v.get(i).getFirstName());
+                System.out.println("\n");
+            }
+        }
+
     }
 }
