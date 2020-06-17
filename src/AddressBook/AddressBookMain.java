@@ -2,6 +2,7 @@ package AddressBook;
 import java.util.*;
 public class AddressBookMain {
     List<Person> records = new ArrayList<Person> ();
+    HashMap<String, Boolean> phoneNoDict = new HashMap<>();
     public void addPerson() {
         Scanner sc = new Scanner(System.in);
         String firstName = "", lastName = "", address = "", city = "", state = "", phoneNo = "";
