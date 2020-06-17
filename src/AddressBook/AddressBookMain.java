@@ -27,11 +27,12 @@ public class AddressBookMain {
         System.out.println("Added Successfully");
         }
         public int findIndex(String phoneNo){
+            String phoneNoTmp;
             int size = records.size();
             int index=-1;
             for (int i = 0; i < size; i++){
-                phoneNo = records.get(i).getPhoneNo();
-                if(phoneNo.equals(phoneNo)) {
+                phoneNoTmp = records.get(i).getPhoneNo();
+                if(phoneNoTmp.equals(phoneNo)) {
                     index = i;
                     break;
                 }
@@ -72,6 +73,7 @@ public class AddressBookMain {
             int index = findIndex(phoneNo);
             if (index == -1) {
                 System.out.println("Entry not found!");
+                return;
             }
 
             int ch = 0;
@@ -128,9 +130,24 @@ public class AddressBookMain {
             }
         }
 
+        public void deletePerson(){
+            String phoneNo;
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Delete");
+            System.out.println("Enter phone number:");
+            phoneNo= sc.nextLine();
+
+            int index = findIndex(phoneNo);
+            if (index == -1) {
+                System.out.println("Entry not found!");
+                return;
+            }
+            records.remove(index);
+        }
+
     public static void main(String[] args) {
         AddressBookMain obj = new AddressBookMain();
         obj.addPerson();
-        obj.editPerson();
+        obj.deletePerson();
     }
 }
