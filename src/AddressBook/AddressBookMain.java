@@ -155,8 +155,35 @@ public class AddressBookMain {
         records.remove(index);
     }
 
+    class SortbyNameHelper implements Comparator<Person>
+    {
+        public int compare(Person a, Person b)
+        {
+            String aFirstName = a.getFirstName();
+            String bFirstName = b.getFirstName();
+
+            String aLastName = a.getLastName();
+            String bLastName = b.getLastName();
+
+            if (aLastName.compareTo(bLastName) == 0){
+                return aFirstName.compareTo(bFirstName);
+            }
+            else{
+                return aLastName.compareTo(bLastName);
+            }
+        }
+    }
+
+    public void SortbyName(){
+        Collections.sort(records, new SortbyNameHelper());
+    }
+
+
     public static void main(String[] args) {
         AddressBookMain obj = new AddressBookMain();
         obj.addPerson();
+        obj.addPerson();
+        obj.SortbyName();
+
     }
 }
