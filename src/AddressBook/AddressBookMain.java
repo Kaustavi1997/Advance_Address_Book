@@ -269,29 +269,50 @@ public class AddressBookMain {
         Collections.sort(records, new SortbyZipHelper());
     }
 
+    public void searchInCity(String firstName,String city){
+        boolean found=false;
+        for (String k : personByCityDict.keySet()) {
+            if(k.compareTo(city) == 0) {
+                List<Person> v = personByCityDict.get(k);
+                for (int i = 0; i < v.size(); i++) {
+                    if(v.get(i).getFirstName().compareTo(firstName) == 0) {
+                        found = true;
+                        System.out.println(v.get(i).getFirstName());
+                        System.out.println(v.get(i).getLastName());
+                    }
+                }
+            }
+        }
+        if(found != true){
+            System.out.println("Person not found in given city");
+        }
+    }
+
+    public void searchInState(String firstName,String state){
+        boolean found=false;
+        for (String k : personByStateDict.keySet()) {
+            if(k.compareTo(state) == 0) {
+                List<Person> v = personByStateDict.get(k);
+                for (int i = 0; i < v.size(); i++) {
+                    if(v.get(i).getFirstName().compareTo(firstName) == 0) {
+                        found = true;
+                        System.out.println(v.get(i).getFirstName());
+                        System.out.println(v.get(i).getLastName());
+                    }
+                }
+            }
+        }
+        if(found != true){
+            System.out.println("Person not found in given state");
+        }
+    }
+
 
     public static void main(String[] args) {
         AddressBookMain obj = new AddressBookMain();
         obj.addPerson();
         obj.addPerson();
-        obj.addPerson();
-        for (String k : obj.personByCityDict.keySet()) {
-            List<Person> v = obj.personByCityDict.get(k);
-            for(int i=0; i<v.size();i++){
-                System.out.println(k);
-                System.out.println(v.get(i).getFirstName());
-                System.out.println("\n");
-            }
-        }
-
-        for (String k : obj.personByStateDict.keySet()) {
-            List<Person> v = obj.personByStateDict.get(k);
-            for(int i=0; i<v.size();i++){
-                System.out.println(k);
-                System.out.println(v.get(i).getFirstName());
-                System.out.println("\n");
-            }
-        }
-
+        obj.searchInCity("kaustavi","kolkata");
+        obj.searchInState("kaustavi","WestBengal");
     }
 }
