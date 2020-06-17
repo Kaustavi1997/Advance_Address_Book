@@ -1,15 +1,15 @@
 package AddressBook;
 
 public class Person {
-    private final String fastName; // cant be edited so private and final
+    private final String firstName; // cant be edited so private and final
     private final String lastName;
     String address;
     String city;
     String state;
     int zip;
     String phoneNo;
-    public Person(String fastName,String lastName,String address,String city,String state,int zip,String phoneNo){
-        this.fastName=fastName;
+    public Person(String firstName,String lastName,String address,String city,String state,int zip,String phoneNo){
+        this.firstName=firstName;
         this.lastName=lastName;
         this.phoneNo=phoneNo;
         this.address=address;
@@ -17,8 +17,8 @@ public class Person {
         this.state=state;
         this.zip=zip;
     }
-    public String getFastName(){
-        return this.fastName;
+    public String getFirstName(){
+        return this.firstName;
     }
 
     public String getLastName(){
