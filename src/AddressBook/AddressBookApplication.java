@@ -21,58 +21,56 @@ public class AddressBookApplication {
             System.out.println("11.To quit");
             int a = sc.nextInt();
             switch (a) {
-                case 1:
+                case 1 -> {
                     obj.addPerson();
                     System.out.println("Added Successfully");
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     obj.editPerson();
                     System.out.println("Edited Successfully");
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     obj.deletePerson();
                     System.out.println("Deleted Successfully");
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     System.out.println("Sorted records by Name:");
                     obj.sortByName();
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     System.out.println("Sorted records by City:");
                     obj.sortByCity();
-                    break;
-                case 6:
+                }
+                case 6 -> {
                     System.out.println("Sorted records by State:");
                     obj.sortByState();
-                    break;
-                case 7:
+                }
+                case 7 -> {
                     System.out.println("Sorted records by Zip:");
                     obj.sortByZip();
-                    break;
-                case 8:
+                }
+                case 8 -> {
                     System.out.println("Persons by City:");
                     obj.viewByCityOrState(0);
                     System.out.println("Persons by State:");
                     obj.viewByCityOrState(1);
-                    break;
-                case 9:
+                }
+                case 9 -> {
                     sc.nextLine();
                     System.out.println("Enter Firstname:");
-                    String firstName=sc.nextLine();
+                    String firstName = sc.nextLine();
                     System.out.println("Enter City:");
-                    String value=sc.nextLine();
-                    obj.searchInCityOrState(firstName,value,0);
+                    String value = sc.nextLine();
+                    obj.searchInCityOrState(firstName, value, 0);
                     System.out.println("Enter State:");
-                    value=sc.nextLine();
-                    obj.searchInCityOrState(firstName,value,1);
-                    break;
-                case 10:
-                    obj.PrintMailinglabelformat(obj.records);
-                    break;
-                case 11:
+                    value = sc.nextLine();
+                    obj.searchInCityOrState(firstName, value, 1);
+                }
+                case 10 -> obj.PrintMailinglabelformat(obj.records);
+                case 11 -> {
                     System.out.println("Quitting!");
                     choice = "n";
-                    break;
+                }
             }
         }
 

@@ -128,41 +128,36 @@ public class AddressBookMain {
 
             String address,state,city;
             int zip;
+            // Eat the new line
             switch (ch) {
-                case 1:
+                case 1 -> {
                     System.out.println("Enter address:");
                     address = sc.nextLine();
                     editPersonHelper(address, "a", index);
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.println("Enter state:");
                     state = sc.nextLine();
                     editPersonHelper(state, "s", index);
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     System.out.println("Enter city:");
                     city = sc.nextLine();
                     editPersonHelper(city, "c", index);
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     System.out.println("Enter zip:");
                     zip = sc.nextInt();
-                    // Eat the new line
                     sc.nextLine();
                     editPersonHelper(zip, index);
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     System.out.println("Enter phone no:");
                     phoneNo = sc.nextLine();
                     editPersonHelper(phoneNo, "p", index);
-                    break;
-                case 6:
-                    System.out.println("Done!");
-                    break;
-                default:
-                    System.out.println("Invalid choice!");
-                    break;
-
+                }
+                case 6 -> System.out.println("Done!");
+                default -> System.out.println("Invalid choice!");
             }
         }
     }
@@ -181,7 +176,7 @@ public class AddressBookMain {
         records.remove(index);
     }
 
-    class sortByNameHelper implements Comparator<Person>
+    static class sortByNameHelper implements Comparator<Person>
     {
         public int compare(Person a, Person b)
         {
@@ -199,7 +194,7 @@ public class AddressBookMain {
             }
         }
     }
-    class sortByCityHelper implements Comparator<Person> {
+    static class sortByCityHelper implements Comparator<Person> {
         public int compare(Person a, Person b) {
             String aCity = a.getCity();
             String bCity = b.getCity();
@@ -215,7 +210,7 @@ public class AddressBookMain {
             }
         }
     }
-    class sortByStateHelper implements Comparator<Person> {
+    static class sortByStateHelper implements Comparator<Person> {
         public int compare(Person a, Person b) {
             String aState = a.getState();
             String bState = b.getState();
@@ -231,7 +226,7 @@ public class AddressBookMain {
             }
         }
     }
-    class sortByZipHelper implements Comparator<Person>
+    static class sortByZipHelper implements Comparator<Person>
     {
         public int compare(Person a, Person b)
         {
@@ -250,20 +245,20 @@ public class AddressBookMain {
         }
     }
     public void sortByName(){
-        Collections.sort(records, new sortByNameHelper());
+        records.sort(new sortByNameHelper());
         PrintMailinglabelformat(records);
     }
 
     public void sortByCity(){
-        Collections.sort(records, new sortByCityHelper());
+        records.sort(new sortByCityHelper());
         PrintMailinglabelformat(records);
     }
     public void sortByState(){
-        Collections.sort(records, new sortByStateHelper());
+        records.sort(new sortByStateHelper());
         PrintMailinglabelformat(records);
     }
     public void sortByZip(){
-        Collections.sort(records, new sortByZipHelper());
+        records.sort(new sortByZipHelper());
         PrintMailinglabelformat(records);
     }
 
@@ -290,7 +285,7 @@ public class AddressBookMain {
                 }
             }
         }
-        if(found != true){
+        if(!found){ //found != true)
             if(choice==0) {
                 System.out.println("Person not found in given city");
             }
