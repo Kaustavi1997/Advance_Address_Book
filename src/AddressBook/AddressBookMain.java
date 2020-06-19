@@ -8,53 +8,51 @@ public class AddressBookMain {
 
     public void addPerson() {
         Scanner sc = new Scanner(System.in);
-        String firstName = "", lastName = "", address = "", city = "", state = "", phoneNo = "";
-        int zip = 0;
 
         System.out.println("Enter phone no:");
-        phoneNo = sc.nextLine();
+        String phoneNo = sc.nextLine();
         if(phoneNoDict.containsKey(phoneNo)) {
             System.out.println("Entry already exists! Can't add!");
         }
         else{
             System.out.println("Enter first name:");
-            firstName = sc.nextLine();
+            String firstName = sc.nextLine();
             System.out.println("Enter last name:");
-            lastName = sc.nextLine();
+            String lastName = sc.nextLine();
             System.out.println("Enter address:");
-            address = sc.nextLine();
+            String address = sc.nextLine();
             System.out.println("Enter city:");
-            city = sc.nextLine();
+            String city = sc.nextLine();
             System.out.println("Enter state:");
-            state = sc.nextLine();
+            String state = sc.nextLine();
             System.out.println("Enter zip:");
-            zip = sc.nextInt();
+            int zip = sc.nextInt();
             // Eat the new line
             sc.nextLine();
 
-            Person p = new Person(firstName, lastName, address, city, state, zip, phoneNo);
-            records.add(p);
+            Person person = new Person(firstName, lastName, address, city, state, zip, phoneNo);
+            records.add(person);
             if (personByCityDict.containsKey(city)) {
                 List<Person> existingList;
                 existingList = personByCityDict.get(city);
-                existingList.add(p);
+                existingList.add(person);
                 personByCityDict.put(city,existingList);
             }
             else{
                 List<Person> emptyList = new ArrayList<Person> ();
-                emptyList.add(p);
+                emptyList.add(person);
                 personByCityDict.put(city,emptyList);
             }
 
             if (personByStateDict.containsKey(state)) {
                 List<Person> existingList;
                 existingList = personByStateDict.get(state);
-                existingList.add(p);
+                existingList.add(person);
                 personByStateDict.put(state,existingList);
             }
             else{
                 List<Person> emptyList = new ArrayList<Person> ();
-                emptyList.add(p);
+                emptyList.add(person);
                 personByStateDict.put(state,emptyList);
             }
 
@@ -64,12 +62,10 @@ public class AddressBookMain {
     }
 
     public int findIndex(String phoneNo){
-        String phoneNoTmp;
-        int size = records.size();
         int index=-1;
-        for (int i = 0; i < size; i++){
-            phoneNoTmp = records.get(i).getPhoneNo();
-            if(phoneNoTmp.equals(phoneNo)) {
+        for (int i = 0; i < records.size(); i++){
+            String phoneNoTemporary = records.get(i).getPhoneNo();
+            if(phoneNoTemporary.equals(phoneNo)) {
                 index = i;
                 break;
             }
@@ -77,35 +73,34 @@ public class AddressBookMain {
         return index;
     }
     public void editPersonHelper(String value,String option,int index){
-        Person obj = records.get(index);
+        Person person = records.get(index);
         if(option=="a"){
-            obj.setAddress(value);
+            person.setAddress(value);
         }
         else if(option=="c"){
-            obj.setCity(value);
+            person.setCity(value);
         }
         else if(option=="s"){
-            obj.setState(value);
+            person.setState(value);
         }
         else if(option=="p"){
-            obj.setPhoneNo(value);
+            person.setPhoneNo(value);
         }
 
-        records.set(index,obj);
+        records.set(index,person);
     }
 
     public void editPersonHelper(int value,int index){
-        Person obj = records.get(index);
-        obj.setZip(value);
-        records.set(index,obj);
+        Person person = records.get(index);
+        person.setZip(value);
+        records.set(index,person);
     }
 
     public void editPerson() {
-        String phoneNo;
         Scanner sc = new Scanner(System.in);
         System.out.println("Edit");
         System.out.println("Enter phone number:");
-        phoneNo= sc.nextLine();
+        String phoneNo= sc.nextLine();
 
         int index = findIndex(phoneNo);
         if (index == -1) {
@@ -113,8 +108,8 @@ public class AddressBookMain {
             return;
         }
 
-        int ch = 0;
-        while (ch != 6) {
+        int choice = 0;
+        while (choice != 6) {
             System.out.println("1 for editing address");
             System.out.println("2 for editing state");
             System.out.println("3 for editing city");
@@ -122,14 +117,14 @@ public class AddressBookMain {
             System.out.println("5 for editing by phone no");
             System.out.println("6 for exit");
             System.out.println("Enter choice");
-            ch = sc.nextInt();
+            choice = sc.nextInt();
             // Eat the new line
             sc.nextLine();
 
             String address,state,city;
             int zip;
             // Eat the new line
-            switch (ch) {
+            switch (choice) {
                 case 1 -> {
                     System.out.println("Enter address:");
                     address = sc.nextLine();
@@ -162,11 +157,10 @@ public class AddressBookMain {
         }
     }
     public void deletePerson(){
-        String phoneNo;
         Scanner sc = new Scanner(System.in);
         System.out.println("Delete");
         System.out.println("Enter phone number:");
-        phoneNo= sc.nextLine();
+        String phoneNo= sc.nextLine();
 
         int index = findIndex(phoneNo);
         if (index == -1) {
@@ -296,8 +290,7 @@ public class AddressBookMain {
     }
 
     public void PrintMailinglabelformat(List<Person> recordList){
-        int size = recordList.size();
-        for (int i = 0; i < size; i++){
+        for (int i = 0; i < recordList.size(); i++){
             System.out.println(recordList.get(i).getLastName() + " " + recordList.get(i).getFirstName());
             System.out.println(recordList.get(i).getAddress());
             System.out.println(recordList.get(i).getCity());
