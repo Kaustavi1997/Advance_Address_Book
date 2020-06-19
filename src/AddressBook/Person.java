@@ -1,28 +1,16 @@
 package AddressBook;
 
-public class Person {
-    String firstName;
-    String lastName;
+class Address{
     String address;
     String city;
     String state;
     int zip;
-    String phoneNo;
-    public Person(String firstName,String lastName,String address,String city,String state,int zip,String phoneNo){
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.phoneNo=phoneNo;
+
+    public Address(String address,String city,String state,int zip) {
         this.address=address;
         this.city=city;
         this.state=state;
         this.zip=zip;
-    }
-    public String getFirstName(){
-        return this.firstName;
-    }
-
-    public String getLastName(){
-        return this.lastName;
     }
 
     public String getAddress(){
@@ -55,6 +43,36 @@ public class Person {
 
     public void setZip(int zip){
         this.zip = zip;
+    }
+}
+
+
+
+public class Person {
+    String firstName;
+    String lastName;
+    Address address;
+    String phoneNo;
+    public Person(String firstName,String lastName,String phoneNo,Address address){
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.phoneNo=phoneNo;
+        this.address=address;
+    }
+    public String getFirstName(){
+        return this.firstName;
+    }
+
+    public String getLastName(){
+        return this.lastName;
+    }
+
+    public Address getAddress(){
+        return this.address;
+    }
+
+    public void setAddress(Address address){
+        this.address = address;
     }
 
     public String getPhoneNo(){

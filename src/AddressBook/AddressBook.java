@@ -26,10 +26,12 @@ public class AddressBook {
             String state = utility.scanner.nextLine();
             System.out.println("Enter zip:");
             int zip = utility.scanner.nextInt();
+            Address addressObject = new Address(address,city,state,zip);
+
             // Eat the new line
             utility.scanner.nextLine();
 
-            Person person = new Person(firstName, lastName, address, city, state, zip, phoneNo);
+            Person person = new Person(firstName,lastName,phoneNo,addressObject);
             records.add(person);
             if (personByCityDict.containsKey(city)) {
                 List<Person> existingList;
@@ -73,13 +75,13 @@ public class AddressBook {
     public void editPersonHelper(String value,String option,int index){
         Person person = records.get(index);
         if(option=="a"){
-            person.setAddress(value);
+            person.getAddress().setAddress(value);
         }
         else if(option=="c"){
-            person.setCity(value);
+            person.getAddress().setCity(value);
         }
         else if(option=="s"){
-            person.setState(value);
+            person.getAddress().setState(value);
         }
         else if(option=="p"){
             person.setPhoneNo(value);
@@ -90,7 +92,7 @@ public class AddressBook {
 
     public void editPersonHelper(int value,int index){
         Person person = records.get(index);
-        person.setZip(value);
+        person.getAddress().setZip(value);
         records.set(index,person);
     }
 
@@ -186,8 +188,8 @@ public class AddressBook {
     }
     static class sortByCityHelper implements Comparator<Person> {
         public int compare(Person a, Person b) {
-            String aCity = a.getCity();
-            String bCity = b.getCity();
+            String aCity = a.getAddress().getCity();
+            String bCity = b.getAddress().getCity();
 
             String aLastName = a.getLastName();
             String bLastName = b.getLastName();
@@ -202,8 +204,8 @@ public class AddressBook {
     }
     static class sortByStateHelper implements Comparator<Person> {
         public int compare(Person a, Person b) {
-            String aState = a.getState();
-            String bState = b.getState();
+            String aState = a.getAddress().getState();
+            String bState = b.getAddress().getState();
 
             String aLastName = a.getLastName();
             String bLastName = b.getLastName();
@@ -220,8 +222,8 @@ public class AddressBook {
     {
         public int compare(Person a, Person b)
         {
-            int aZip = a.getZip();
-            int bZip = b.getZip();
+            int aZip = a.getAddress().getZip();
+            int bZip = b.getAddress().getZip();
 
             String aLastName = a.getLastName();
             String bLastName = b.getLastName();
@@ -288,10 +290,10 @@ public class AddressBook {
     public void PrintMailinglabelformat(List<Person> recordList){
         for (int i = 0; i < recordList.size(); i++){
             System.out.println(recordList.get(i).getLastName() + " " + recordList.get(i).getFirstName());
-            System.out.println(recordList.get(i).getAddress());
-            System.out.println(recordList.get(i).getCity());
-            System.out.println(recordList.get(i).getState());
-            System.out.println(recordList.get(i).getZip());
+            System.out.println(recordList.get(i).getAddress().getAddress());
+            System.out.println(recordList.get(i).getAddress().getCity());
+            System.out.println(recordList.get(i).getAddress().getState());
+            System.out.println(recordList.get(i).getAddress().getZip());
             System.out.println(recordList.get(i).getPhoneNo());
             System.out.println("");
         }
