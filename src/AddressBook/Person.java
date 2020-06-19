@@ -1,8 +1,8 @@
 package AddressBook;
 
 public class Person {
-    private final String firstName; // cant be edited so private and final
-    private final String lastName;
+    String firstName;
+    String lastName;
     String address;
     String city;
     String state;

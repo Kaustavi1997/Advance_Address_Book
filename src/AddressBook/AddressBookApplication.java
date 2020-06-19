@@ -1,7 +1,7 @@
 package AddressBook;
 import java.util.*;
 public class AddressBookApplication {
-    AddressBookMain obj = new AddressBookMain();
+    AddressBookMain addressBookMain = new AddressBookMain();
 
     public void displayOptions() {
         Scanner sc = new Scanner(System.in);
@@ -22,38 +22,37 @@ public class AddressBookApplication {
             int a = sc.nextInt();
             switch (a) {
                 case 1 -> {
-                    obj.addPerson();
-                    System.out.println("Added Successfully");
+                    addressBookMain.addPerson();
                 }
                 case 2 -> {
-                    obj.editPerson();
+                    addressBookMain.editPerson();
                     System.out.println("Edited Successfully");
                 }
                 case 3 -> {
-                    obj.deletePerson();
+                    addressBookMain.deletePerson();
                     System.out.println("Deleted Successfully");
                 }
                 case 4 -> {
                     System.out.println("Sorted records by Name:");
-                    obj.sortByName();
+                    addressBookMain.sortByName();
                 }
                 case 5 -> {
                     System.out.println("Sorted records by City:");
-                    obj.sortByCity();
+                    addressBookMain.sortByCity();
                 }
                 case 6 -> {
                     System.out.println("Sorted records by State:");
-                    obj.sortByState();
+                    addressBookMain.sortByState();
                 }
                 case 7 -> {
                     System.out.println("Sorted records by Zip:");
-                    obj.sortByZip();
+                    addressBookMain.sortByZip();
                 }
                 case 8 -> {
                     System.out.println("Persons by City:");
-                    obj.viewByCityOrState(0);
+                    addressBookMain.viewByCityOrState(0);
                     System.out.println("Persons by State:");
-                    obj.viewByCityOrState(1);
+                    addressBookMain.viewByCityOrState(1);
                 }
                 case 9 -> {
                     sc.nextLine();
@@ -61,22 +60,23 @@ public class AddressBookApplication {
                     String firstName = sc.nextLine();
                     System.out.println("Enter City:");
                     String value = sc.nextLine();
-                    obj.searchInCityOrState(firstName, value, 0);
+                    addressBookMain.searchInCityOrState(firstName, value, 0);
                     System.out.println("Enter State:");
                     value = sc.nextLine();
-                    obj.searchInCityOrState(firstName, value, 1);
+                    addressBookMain.searchInCityOrState(firstName, value, 1);
                 }
-                case 10 -> obj.PrintMailinglabelformat(obj.records);
+                case 10 -> addressBookMain.PrintMailinglabelformat(addressBookMain.records);
                 case 11 -> {
                     System.out.println("Quitting!");
-                    choice = "n";
+                    System.exit(0);
+
                 }
             }
         }
 
     }
     public static void main(String[] args) {
-        AddressBookApplication obj = new AddressBookApplication();
-        obj.displayOptions();
+        AddressBookApplication addressBookApplication = new AddressBookApplication();
+        addressBookApplication.displayOptions();
     }
 }
