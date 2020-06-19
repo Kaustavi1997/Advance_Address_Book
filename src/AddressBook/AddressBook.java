@@ -3,17 +3,16 @@ import java.util.*;
 public class AddressBook {
     Utility utility = new Utility();
     List<Person> records = new ArrayList<Person> ();
-    Map<String, Boolean> phoneNoDict = new HashMap<>();
-    Map<String, List<Person>> personByCityDict = new HashMap<>();
-    Map<String, List<Person>> personByStateDict = new HashMap<>();
+    Map<String, Boolean> phoneNoDictionary = new HashMap<>();
+    Map<String, List<Person>> personByCityDictionary = new HashMap<>();
+    Map<String, List<Person>> personByStateDictionary = new HashMap<>();
 
     public void addPerson() {
         System.out.println("Enter phone no:");
         String phoneNo = utility.scanner.nextLine();
-        if(phoneNoDict.containsKey(phoneNo)) {
+        if (phoneNoDictionary.containsKey(phoneNo)) {
             System.out.println("Entry already exists! Can't add!");
-        }
-        else{
+        } else {
             System.out.println("Enter first name:");
             String firstName = utility.scanner.nextLine();
             System.out.println("Enter last name:");
@@ -26,39 +25,44 @@ public class AddressBook {
             String state = utility.scanner.nextLine();
             System.out.println("Enter zip:");
             int zip = utility.scanner.nextInt();
-            Address addressObject = new Address(address,city,state,zip);
-
+            Address addressObject = new Address(address, city, state, zip);
             // Eat the new line
             utility.scanner.nextLine();
 
-            Person person = new Person(firstName,lastName,phoneNo,addressObject);
+            Person person = new Person(firstName, lastName, phoneNo, addressObject);
             records.add(person);
-            if (personByCityDict.containsKey(city)) {
-                List<Person> existingList;
-                existingList = personByCityDict.get(city);
-                existingList.add(person);
-                personByCityDict.put(city,existingList);
-            }
-            else{
-                List<Person> emptyList = new ArrayList<Person> ();
-                emptyList.add(person);
-                personByCityDict.put(city,emptyList);
-            }
-
-            if (personByStateDict.containsKey(state)) {
-                List<Person> existingList;
-                existingList = personByStateDict.get(state);
-                existingList.add(person);
-                personByStateDict.put(state,existingList);
-            }
-            else{
-                List<Person> emptyList = new ArrayList<Person> ();
-                emptyList.add(person);
-                personByStateDict.put(state,emptyList);
-            }
-            phoneNoDict.put(phoneNo, Boolean.TRUE);
+            phoneNoDictionary.put(phoneNo, Boolean.TRUE);
+            addPersonCityWise(city,person);
+            addPersonStateWise(state,person);
             System.out.println("Added Successfully");
         }
+    }
+    public void addPersonCityWise(String city,Person person){
+        if (personByCityDictionary.containsKey(city)) {
+            List<Person> existingList;
+            existingList = personByCityDictionary.get(city);
+            existingList.add(person);
+            personByCityDictionary.put(city,existingList);
+        }
+        else{
+            List<Person> emptyList = new ArrayList<Person> ();
+            emptyList.add(person);
+            personByCityDictionary.put(city,emptyList);
+        }
+    }
+    public void addPersonStateWise(String state,Person person){
+        if (personByStateDictionary.containsKey(state)) {
+            List<Person> existingList;
+            existingList = personByStateDictionary.get(state);
+            existingList.add(person);
+            personByStateDictionary.put(state,existingList);
+        }
+        else{
+            List<Person> emptyList = new ArrayList<Person> ();
+            emptyList.add(person);
+            personByStateDictionary.put(state,emptyList);
+        }
+
     }
 
     public int findIndex(String phoneNo){
@@ -233,10 +237,10 @@ public class AddressBook {
         boolean found=false;
         Map<String, List<Person>> commonDict;
         if(choice==0){
-            commonDict=personByCityDict;
+            commonDict= personByCityDictionary;
         }
         else{
-            commonDict=personByStateDict;
+            commonDict= personByStateDictionary;
         }
         for (String k : commonDict.keySet()) {
             if(k.compareTo(value) == 0) {
@@ -246,7 +250,7 @@ public class AddressBook {
                         found = true;
                         System.out.println(v.get(i).getFirstName());
                         System.out.println(v.get(i).getLastName());
-                        System.out.println(v.get(i).getAddress());
+                        System.out.println(v.get(i).getAddress().getAddress());
                         System.out.println(v.get(i).getPhoneNo());
                     }
                 }
@@ -277,10 +281,10 @@ public class AddressBook {
     public void viewByCityOrState(int choice){
         Map<String, List<Person>> commonDict;
         if(choice==0){
-            commonDict = personByCityDict;
+            commonDict = personByCityDictionary;
         }
         else{
-            commonDict = personByStateDict;
+            commonDict = personByStateDictionary;
         }
         for (String k : commonDict.keySet()) {
             List<Person> v = commonDict.get(k);

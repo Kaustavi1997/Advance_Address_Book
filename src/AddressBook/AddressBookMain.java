@@ -3,6 +3,24 @@ package AddressBook;
 public class AddressBookMain {
     AddressBook addressBook = new AddressBook();
     Utility utility = new Utility();
+    public void takingInputsForSearching(){
+        utility.scanner.nextLine();
+        System.out.println("Enter Firstname:");
+        String firstName = utility.scanner.nextLine();
+        System.out.println("Enter City:");
+        String value = utility.scanner.nextLine();
+        addressBook.searchInCityOrState(firstName, value, 0);
+        System.out.println("Enter State:");
+        value = utility.scanner.nextLine();
+        addressBook.searchInCityOrState(firstName, value, 1);
+    }
+    public void viewByCityOrStateHelper(){
+        System.out.println("Persons by City:");
+        addressBook.viewByCityOrState(0);
+        System.out.println("Persons by State:");
+        addressBook.viewByCityOrState(1);
+    }
+
 
     public void displayOptions() {
         String choice = "y";
@@ -49,21 +67,10 @@ public class AddressBookMain {
                     addressBook.sortByZip();
                 }
                 case 8 -> {
-                    System.out.println("Persons by City:");
-                    addressBook.viewByCityOrState(0);
-                    System.out.println("Persons by State:");
-                    addressBook.viewByCityOrState(1);
+                    viewByCityOrStateHelper();
                 }
                 case 9 -> {
-                    utility.scanner.nextLine();
-                    System.out.println("Enter Firstname:");
-                    String firstName = utility.scanner.nextLine();
-                    System.out.println("Enter City:");
-                    String value = utility.scanner.nextLine();
-                    addressBook.searchInCityOrState(firstName, value, 0);
-                    System.out.println("Enter State:");
-                    value = utility.scanner.nextLine();
-                    addressBook.searchInCityOrState(firstName, value, 1);
+                    takingInputsForSearching();
                 }
                 case 10 -> addressBook.PrintMailinglabelformat(addressBook.records);
                 case 11 -> {
