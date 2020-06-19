@@ -72,30 +72,6 @@ public class AddressBook {
         }
         return index;
     }
-    public void editPersonHelper(String value,String option,int index){
-        Person person = records.get(index);
-        if(option=="a"){
-            person.getAddress().setAddress(value);
-        }
-        else if(option=="c"){
-            person.getAddress().setCity(value);
-        }
-        else if(option=="s"){
-            person.getAddress().setState(value);
-        }
-        else if(option=="p"){
-            person.setPhoneNo(value);
-        }
-
-        records.set(index,person);
-    }
-
-    public void editPersonHelper(int value,int index){
-        Person person = records.get(index);
-        person.getAddress().setZip(value);
-        records.set(index,person);
-    }
-
     public void editPerson() {
         System.out.println("Edit");
         System.out.println("Enter phone number:");
@@ -106,7 +82,6 @@ public class AddressBook {
             System.out.println("Entry not found!");
             return;
         }
-
         int choice = 0;
         while (choice != 6) {
             System.out.println("1 for editing address");
@@ -127,28 +102,28 @@ public class AddressBook {
                 case 1 -> {
                     System.out.println("Enter address:");
                     address = utility.scanner.nextLine();
-                    editPersonHelper(address, "a", index);
+                    records.get(index).getAddress().setAddress(address);
                 }
                 case 2 -> {
                     System.out.println("Enter state:");
                     state = utility.scanner.nextLine();
-                    editPersonHelper(state, "s", index);
+                    records.get(index).getAddress().setState(state);
                 }
                 case 3 -> {
                     System.out.println("Enter city:");
                     city = utility.scanner.nextLine();
-                    editPersonHelper(city, "c", index);
+                    records.get(index).getAddress().setCity(city);
                 }
                 case 4 -> {
                     System.out.println("Enter zip:");
                     zip = utility.scanner.nextInt();
                     utility.scanner.nextLine();
-                    editPersonHelper(zip, index);
+                    records.get(index).getAddress().setZip(zip);
                 }
                 case 5 -> {
                     System.out.println("Enter phone no:");
                     phoneNo = utility.scanner.nextLine();
-                    editPersonHelper(phoneNo, "p", index);
+                    records.get(index).setPhoneNo(phoneNo);
                 }
                 case 6 -> System.out.println("Done!");
                 default -> System.out.println("Invalid choice!");
