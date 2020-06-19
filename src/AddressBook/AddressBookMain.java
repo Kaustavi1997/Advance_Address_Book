@@ -2,9 +2,9 @@ package AddressBook;
 import java.util.*;
 public class AddressBookMain {
     List<Person> records = new ArrayList<Person> ();
-    HashMap<String, Boolean> phoneNoDict = new HashMap<>();
-    HashMap<String, List<Person>> personByCityDict = new HashMap<>();
-    HashMap<String, List<Person>> personByStateDict = new HashMap<>();
+    Map<String, Boolean> phoneNoDict = new HashMap<>();
+    Map<String, List<Person>> personByCityDict = new HashMap<>();
+    Map<String, List<Person>> personByStateDict = new HashMap<>();
 
     public void addPerson() {
         Scanner sc = new Scanner(System.in);
@@ -258,7 +258,7 @@ public class AddressBookMain {
 
     public void searchInCityOrState(String firstName,String value,int choice){
         boolean found=false;
-        HashMap<String, List<Person>> commonDict;
+        Map<String, List<Person>> commonDict;
         if(choice==0){
             commonDict=personByCityDict;
         }
@@ -302,7 +302,7 @@ public class AddressBookMain {
     }
 
     public void viewByCityOrState(int choice){
-        HashMap<String, List<Person>> commonDict;
+        Map<String, List<Person>> commonDict;
         if(choice==0){
             commonDict = personByCityDict;
         }
