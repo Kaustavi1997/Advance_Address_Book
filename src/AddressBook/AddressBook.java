@@ -1,12 +1,12 @@
 package AddressBook;
 import java.util.*;
+
 public class AddressBook {
     Utility utility = new Utility();
     List<Person> records = new ArrayList<Person> ();
     Map<String, Boolean> phoneNoDictionary = new HashMap<>();
     Map<String, List<Person>> personByCityDictionary = new HashMap<>();
     Map<String, List<Person>> personByStateDictionary = new HashMap<>();
-
     public void addPerson() {
         System.out.println("Enter phone no:");
         String phoneNo = utility.scanner.nextLine();
@@ -28,7 +28,6 @@ public class AddressBook {
             Address addressObject = new Address(address, city, state, zip);
             // Eat the new line
             utility.scanner.nextLine();
-
             Person person = new Person(firstName, lastName, phoneNo, addressObject);
             records.add(person);
             phoneNoDictionary.put(phoneNo, Boolean.TRUE);
@@ -80,7 +79,6 @@ public class AddressBook {
         System.out.println("Edit");
         System.out.println("Enter phone number:");
         String phoneNo= utility.scanner.nextLine();
-
         int index = findIndex(phoneNo);
         if (index == -1) {
             System.out.println("Entry not found!");
@@ -98,29 +96,26 @@ public class AddressBook {
             choice = utility.scanner.nextInt();
             // Eat the new line
             utility.scanner.nextLine();
-
-            String address,state,city;
-            int zip;
             // Eat the new line
             switch (choice) {
                 case 1 -> {
                     System.out.println("Enter address:");
-                    address = utility.scanner.nextLine();
+                    String address = utility.scanner.nextLine();
                     records.get(index).getAddress().setAddress(address);
                 }
                 case 2 -> {
                     System.out.println("Enter state:");
-                    state = utility.scanner.nextLine();
+                    String state = utility.scanner.nextLine();
                     records.get(index).getAddress().setState(state);
                 }
                 case 3 -> {
                     System.out.println("Enter city:");
-                    city = utility.scanner.nextLine();
+                    String city = utility.scanner.nextLine();
                     records.get(index).getAddress().setCity(city);
                 }
                 case 4 -> {
                     System.out.println("Enter zip:");
-                    zip = utility.scanner.nextInt();
+                    int zip = utility.scanner.nextInt();
                     utility.scanner.nextLine();
                     records.get(index).getAddress().setZip(zip);
                 }
@@ -129,7 +124,9 @@ public class AddressBook {
                     phoneNo = utility.scanner.nextLine();
                     records.get(index).setPhoneNo(phoneNo);
                 }
-                case 6 -> System.out.println("Done!");
+                case 6 -> {
+                    System.out.println("Done!");
+                }
                 default -> System.out.println("Invalid choice!");
             }
         }
@@ -147,90 +144,69 @@ public class AddressBook {
         records.remove(index);
     }
 
-    static class sortByNameHelper implements Comparator<Person>
-    {
-        public int compare(Person a, Person b)
-        {
-            String aFirstName = a.getFirstName();
-            String bFirstName = b.getFirstName();
-
-            String aLastName = a.getLastName();
-            String bLastName = b.getLastName();
-
-            if (aLastName.compareTo(bLastName) == 0){
-                return aFirstName.compareTo(bFirstName);
+    public enum SortingField implements Comparator<Person> {
+        NAME {
+            @Override
+            public int compare(Person a, Person b) {
+                if (a.getLastName().compareTo(b.getLastName()) == 0){
+                    return a.getFirstName().compareTo(b.getFirstName());
+                }
+                else{
+                    return a.getLastName().compareTo(b.getLastName());
+                }
             }
-            else{
-                return aLastName.compareTo(bLastName);
+        },
+        CITY {
+            @Override
+            public int compare(Person a, Person b) {
+                return a.getAddress().getCity().compareTo(b.getAddress().getCity());
             }
-        }
-    }
-    static class sortByCityHelper implements Comparator<Person> {
-        public int compare(Person a, Person b) {
-            String aCity = a.getAddress().getCity();
-            String bCity = b.getAddress().getCity();
-
-            String aLastName = a.getLastName();
-            String bLastName = b.getLastName();
-
-            if (aCity.compareTo(bCity) == 0) {
-                return aLastName.compareTo(bLastName);
+        },
+        STATE {
+            @Override
+            public int compare(Person a, Person b) {
+                return a.getAddress().getState().compareTo(b.getAddress().getState());
             }
-            else{
-                return aCity.compareTo(bCity);
+        },
+        ZIP {
+            @Override
+            public int compare(Person a, Person b) {
+                return a.getAddress().getZip() - b.getAddress().getZip();
             }
         }
-    }
-    static class sortByStateHelper implements Comparator<Person> {
-        public int compare(Person a, Person b) {
-            String aState = a.getAddress().getState();
-            String bState = b.getAddress().getState();
 
-            String aLastName = a.getLastName();
-            String bLastName = b.getLastName();
-
-            if (aState.compareTo(bState) == 0) {
-                return aLastName.compareTo(bLastName);
+    };
+    public void sort() {
+        System.out.println("1.sort by name");
+        System.out.println("2.sort by state");
+        System.out.println("3.sort by city");
+        System.out.println("4.sort by zip");
+        SortingField sortingField;
+        int choice=utility.scanner.nextInt();
+        utility.scanner.nextLine();
+        switch (choice) {
+            case 1 -> {
+                sortingField = SortingField.NAME;
+                records.sort(sortingField);
+                PrintMailinglabelformat(records);
             }
-            else{
-                return aState.compareTo(bState);
+            case 2 -> {
+                sortingField = SortingField.STATE;
+                records.sort(sortingField);
+                PrintMailinglabelformat(records);
             }
+            case 3 -> {
+                sortingField = SortingField.CITY;
+                records.sort(sortingField);
+                PrintMailinglabelformat(records);
+            }
+            case 4 -> {
+                sortingField = SortingField.ZIP;
+                records.sort(sortingField);
+                PrintMailinglabelformat(records);
+            }
+            default -> System.out.println("Invalid choice!");
         }
-    }
-    static class sortByZipHelper implements Comparator<Person>
-    {
-        public int compare(Person a, Person b)
-        {
-            int aZip = a.getAddress().getZip();
-            int bZip = b.getAddress().getZip();
-
-            String aLastName = a.getLastName();
-            String bLastName = b.getLastName();
-
-            if (aZip - bZip == 0){
-                return aLastName.compareTo(bLastName);
-            }
-            else{
-                return aZip - bZip;
-            }
-        }
-    }
-    public void sortByName(){
-        records.sort(new sortByNameHelper());
-        PrintMailinglabelformat(records);
-    }
-
-    public void sortByCity(){
-        records.sort(new sortByCityHelper());
-        PrintMailinglabelformat(records);
-    }
-    public void sortByState(){
-        records.sort(new sortByStateHelper());
-        PrintMailinglabelformat(records);
-    }
-    public void sortByZip(){
-        records.sort(new sortByZipHelper());
-        PrintMailinglabelformat(records);
     }
 
     public void searchInCityOrState(String firstName,String value,int choice){

@@ -20,8 +20,6 @@ public class AddressBookMain {
         System.out.println("Persons by State:");
         addressBook.viewByCityOrState(1);
     }
-
-
     public void displayOptions() {
         String choice = "y";
         while (choice.equals("y")) {
@@ -29,14 +27,11 @@ public class AddressBookMain {
             System.out.println("1.Add Person to AddressBook");
             System.out.println("2.Edit Person to AddressBook");
             System.out.println("3.Delete Person from AddressBook");
-            System.out.println("4.Sort By Name");
-            System.out.println("5.Sort By City");
-            System.out.println("6.Sort By State");
-            System.out.println("7.Sort By Zip");
-            System.out.println("8.View a person by City and State");
-            System.out.println("9.Search a person in City or State");
-            System.out.println("10.Print the AddressBook");
-            System.out.println("11.To quit");
+            System.out.println("4.Sort Address Book");
+            System.out.println("5.View a person by City and State");
+            System.out.println("6.Search a person in City or State");
+            System.out.println("7.Print the AddressBook");
+            System.out.println("8.To quit");
             int a = utility.scanner.nextInt();
             switch (a) {
                 case 1 -> {
@@ -51,33 +46,21 @@ public class AddressBookMain {
                     System.out.println("Deleted Successfully");
                 }
                 case 4 -> {
-                    System.out.println("Sorted records by Name:");
-                    addressBook.sortByName();
+                    addressBook.sort();
                 }
                 case 5 -> {
-                    System.out.println("Sorted records by City:");
-                    addressBook.sortByCity();
-                }
-                case 6 -> {
-                    System.out.println("Sorted records by State:");
-                    addressBook.sortByState();
-                }
-                case 7 -> {
-                    System.out.println("Sorted records by Zip:");
-                    addressBook.sortByZip();
-                }
-                case 8 -> {
                     viewByCityOrStateHelper();
                 }
-                case 9 -> {
+                case 6 -> {
                     takingInputsForSearching();
                 }
-                case 10 -> addressBook.PrintMailinglabelformat(addressBook.records);
-                case 11 -> {
+                case 7 -> addressBook.PrintMailinglabelformat(addressBook.records);
+                case 8 -> {
                     System.out.println("Quitting!");
                     System.exit(0);
 
                 }
+                default -> System.out.println("Invalid choice!");
             }
         }
 
