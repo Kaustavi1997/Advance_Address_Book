@@ -1,34 +1,33 @@
 package AddressBook;
 import java.util.*;
 public class AddressBookMain {
+    Utility utility = new Utility();
     List<Person> records = new ArrayList<Person> ();
     Map<String, Boolean> phoneNoDict = new HashMap<>();
     Map<String, List<Person>> personByCityDict = new HashMap<>();
     Map<String, List<Person>> personByStateDict = new HashMap<>();
 
     public void addPerson() {
-        Scanner sc = new Scanner(System.in);
-
         System.out.println("Enter phone no:");
-        String phoneNo = sc.nextLine();
+        String phoneNo = utility.scanner.nextLine();
         if(phoneNoDict.containsKey(phoneNo)) {
             System.out.println("Entry already exists! Can't add!");
         }
         else{
             System.out.println("Enter first name:");
-            String firstName = sc.nextLine();
+            String firstName = utility.scanner.nextLine();
             System.out.println("Enter last name:");
-            String lastName = sc.nextLine();
+            String lastName = utility.scanner.nextLine();
             System.out.println("Enter address:");
-            String address = sc.nextLine();
+            String address = utility.scanner.nextLine();
             System.out.println("Enter city:");
-            String city = sc.nextLine();
+            String city = utility.scanner.nextLine();
             System.out.println("Enter state:");
-            String state = sc.nextLine();
+            String state = utility.scanner.nextLine();
             System.out.println("Enter zip:");
-            int zip = sc.nextInt();
+            int zip = utility.scanner.nextInt();
             // Eat the new line
-            sc.nextLine();
+            utility.scanner.nextLine();
 
             Person person = new Person(firstName, lastName, address, city, state, zip, phoneNo);
             records.add(person);
@@ -55,7 +54,6 @@ public class AddressBookMain {
                 emptyList.add(person);
                 personByStateDict.put(state,emptyList);
             }
-
             phoneNoDict.put(phoneNo, Boolean.TRUE);
             System.out.println("Added Successfully");
         }
@@ -97,10 +95,9 @@ public class AddressBookMain {
     }
 
     public void editPerson() {
-        Scanner sc = new Scanner(System.in);
         System.out.println("Edit");
         System.out.println("Enter phone number:");
-        String phoneNo= sc.nextLine();
+        String phoneNo= utility.scanner.nextLine();
 
         int index = findIndex(phoneNo);
         if (index == -1) {
@@ -117,9 +114,9 @@ public class AddressBookMain {
             System.out.println("5 for editing by phone no");
             System.out.println("6 for exit");
             System.out.println("Enter choice");
-            choice = sc.nextInt();
+            choice = utility.scanner.nextInt();
             // Eat the new line
-            sc.nextLine();
+            utility.scanner.nextLine();
 
             String address,state,city;
             int zip;
@@ -127,28 +124,28 @@ public class AddressBookMain {
             switch (choice) {
                 case 1 -> {
                     System.out.println("Enter address:");
-                    address = sc.nextLine();
+                    address = utility.scanner.nextLine();
                     editPersonHelper(address, "a", index);
                 }
                 case 2 -> {
                     System.out.println("Enter state:");
-                    state = sc.nextLine();
+                    state = utility.scanner.nextLine();
                     editPersonHelper(state, "s", index);
                 }
                 case 3 -> {
                     System.out.println("Enter city:");
-                    city = sc.nextLine();
+                    city = utility.scanner.nextLine();
                     editPersonHelper(city, "c", index);
                 }
                 case 4 -> {
                     System.out.println("Enter zip:");
-                    zip = sc.nextInt();
-                    sc.nextLine();
+                    zip = utility.scanner.nextInt();
+                    utility.scanner.nextLine();
                     editPersonHelper(zip, index);
                 }
                 case 5 -> {
                     System.out.println("Enter phone no:");
-                    phoneNo = sc.nextLine();
+                    phoneNo = utility.scanner.nextLine();
                     editPersonHelper(phoneNo, "p", index);
                 }
                 case 6 -> System.out.println("Done!");
@@ -157,10 +154,9 @@ public class AddressBookMain {
         }
     }
     public void deletePerson(){
-        Scanner sc = new Scanner(System.in);
         System.out.println("Delete");
         System.out.println("Enter phone number:");
-        String phoneNo= sc.nextLine();
+        String phoneNo= utility.scanner.nextLine();
 
         int index = findIndex(phoneNo);
         if (index == -1) {

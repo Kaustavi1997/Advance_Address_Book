@@ -2,9 +2,9 @@ package AddressBook;
 import java.util.*;
 public class AddressBookApplication {
     AddressBookMain addressBookMain = new AddressBookMain();
+    Utility utility = new Utility();
 
     public void displayOptions() {
-        Scanner sc = new Scanner(System.in);
         String choice = "y";
         while (choice.equals("y")) {
             System.out.println("Select option:");
@@ -19,7 +19,7 @@ public class AddressBookApplication {
             System.out.println("9.Search a person in City or State");
             System.out.println("10.Print the AddressBook");
             System.out.println("11.To quit");
-            int a = sc.nextInt();
+            int a = utility.scanner.nextInt();
             switch (a) {
                 case 1 -> {
                     addressBookMain.addPerson();
@@ -55,14 +55,14 @@ public class AddressBookApplication {
                     addressBookMain.viewByCityOrState(1);
                 }
                 case 9 -> {
-                    sc.nextLine();
+                    utility.scanner.nextLine();
                     System.out.println("Enter Firstname:");
-                    String firstName = sc.nextLine();
+                    String firstName = utility.scanner.nextLine();
                     System.out.println("Enter City:");
-                    String value = sc.nextLine();
+                    String value = utility.scanner.nextLine();
                     addressBookMain.searchInCityOrState(firstName, value, 0);
                     System.out.println("Enter State:");
-                    value = sc.nextLine();
+                    value = utility.scanner.nextLine();
                     addressBookMain.searchInCityOrState(firstName, value, 1);
                 }
                 case 10 -> addressBookMain.PrintMailinglabelformat(addressBookMain.records);
