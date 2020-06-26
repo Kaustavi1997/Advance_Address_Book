@@ -7,7 +7,7 @@ public class AddressBook {
     Map<String, Boolean> phoneNoDictionary = new HashMap<>();
     Map<String, List<Person>> personByCityDictionary = new HashMap<>();
     Map<String, List<Person>> personByStateDictionary = new HashMap<>();
-    public void addPerson() {
+    public void addPerson() throws Exception {
         System.out.println("Enter phone no:");
         String phoneNo = utility.scanner.nextLine();
         if (phoneNoDictionary.containsKey(phoneNo)) {
@@ -24,15 +24,22 @@ public class AddressBook {
             System.out.println("Enter state:");
             String state = utility.scanner.nextLine();
             System.out.println("Enter zip:");
-            int zip = utility.scanner.nextInt();
+            int zip;
+            try {
+                zip = utility.scanner.nextInt();
+                // Eat the new line
+                utility.scanner.nextLine();
+            } catch (Exception e) {
+                // Eat the new line
+                utility.scanner.nextLine();
+                throw new Exception("Enter Integer for zip");
+            }
             Address addressObject = new Address(address, city, state, zip);
-            // Eat the new line
-            utility.scanner.nextLine();
             Person person = new Person(firstName, lastName, phoneNo, addressObject);
             records.add(person);
             phoneNoDictionary.put(phoneNo, Boolean.TRUE);
-            addPersonCityWise(city,person);
-            addPersonStateWise(state,person);
+            addPersonCityWise(city, person);
+            addPersonStateWise(state, person);
             System.out.println("Added Successfully");
         }
     }
@@ -142,68 +149,54 @@ public class AddressBook {
             return;
         }
         records.remove(index);
+        System.out.println("Deleted Successfully");
+    }
+    public static void printEachRecord(Person record){
+        System.out.println(record.getLastName() + " " + record.getFirstName());
+        System.out.println(record.getAddress().getAddress());
+        System.out.println(record.getAddress().getCity());
+        System.out.println(record.getAddress().getState());
+        System.out.println(record.getAddress().getZip());
+        System.out.println(record.getPhoneNo());
+        System.out.println("");
     }
 
-    public enum SortingField implements Comparator<Person> {
-        NAME {
-            @Override
-            public int compare(Person a, Person b) {
-                if (a.getLastName().compareTo(b.getLastName()) == 0){
-                    return a.getFirstName().compareTo(b.getFirstName());
-                }
-                else{
-                    return a.getLastName().compareTo(b.getLastName());
-                }
-            }
-        },
-        CITY {
-            @Override
-            public int compare(Person a, Person b) {
-                return a.getAddress().getCity().compareTo(b.getAddress().getCity());
-            }
-        },
-        STATE {
-            @Override
-            public int compare(Person a, Person b) {
-                return a.getAddress().getState().compareTo(b.getAddress().getState());
-            }
-        },
-        ZIP {
-            @Override
-            public int compare(Person a, Person b) {
-                return a.getAddress().getZip() - b.getAddress().getZip();
-            }
-        }
+    public void sortByName() {
+        records.stream().sorted((o1, o2)->o1.getFirstName().
+                compareTo(o2.getFirstName())).forEach(AddressBook::printEachRecord);
+    }
+    public void sortByState() {
+        records.stream().sorted((o1, o2)->o1.getAddress().getState().
+                compareTo(o2.getAddress().getState())).forEach(AddressBook::printEachRecord);
+    }
+    public void sortByZip() {
+        records.stream().sorted((o1, o2)->o1.getAddress().getZip() - o2.getAddress().getZip()).
+                forEach(AddressBook::printEachRecord);
+    }
+    public void sortByCity() {
+        records.stream().sorted((o1, o2)->o1.getAddress().getCity().
+                compareTo(o2.getAddress().getCity())).forEach(AddressBook::printEachRecord);
 
-    };
+    }
     public void sort() {
         System.out.println("1.sort by name");
         System.out.println("2.sort by state");
         System.out.println("3.sort by city");
         System.out.println("4.sort by zip");
-        SortingField sortingField;
         int choice=utility.scanner.nextInt();
         utility.scanner.nextLine();
         switch (choice) {
             case 1 -> {
-                sortingField = SortingField.NAME;
-                records.sort(sortingField);
-                PrintMailinglabelformat(records);
+                sortByName();
             }
             case 2 -> {
-                sortingField = SortingField.STATE;
-                records.sort(sortingField);
-                PrintMailinglabelformat(records);
+                sortByState();
             }
             case 3 -> {
-                sortingField = SortingField.CITY;
-                records.sort(sortingField);
-                PrintMailinglabelformat(records);
+                sortByCity();
             }
             case 4 -> {
-                sortingField = SortingField.ZIP;
-                records.sort(sortingField);
-                PrintMailinglabelformat(records);
+                sortByZip();
             }
             default -> System.out.println("Invalid choice!");
         }
@@ -218,16 +211,14 @@ public class AddressBook {
         else{
             commonDict= personByStateDictionary;
         }
+        List<Person> foundPersons = new ArrayList<Person> ();
         for (String k : commonDict.keySet()) {
             if(k.compareTo(value) == 0) {
                 List<Person> v = commonDict.get(k);
                 for (int i = 0; i < v.size(); i++) {
                     if(v.get(i).getFirstName().compareTo(firstName) == 0) {
                         found = true;
-                        System.out.println(v.get(i).getFirstName());
-                        System.out.println(v.get(i).getLastName());
-                        System.out.println(v.get(i).getAddress().getAddress());
-                        System.out.println(v.get(i).getPhoneNo());
+                        foundPersons.add(v.get(i));
                     }
                 }
             }
@@ -240,17 +231,8 @@ public class AddressBook {
                 System.out.println("Person not found in given state");
             }
         }
-    }
-
-    public void PrintMailinglabelformat(List<Person> recordList){
-        for (int i = 0; i < recordList.size(); i++){
-            System.out.println(recordList.get(i).getLastName() + " " + recordList.get(i).getFirstName());
-            System.out.println(recordList.get(i).getAddress().getAddress());
-            System.out.println(recordList.get(i).getAddress().getCity());
-            System.out.println(recordList.get(i).getAddress().getState());
-            System.out.println(recordList.get(i).getAddress().getZip());
-            System.out.println(recordList.get(i).getPhoneNo());
-            System.out.println("");
+        else{
+            foundPersons.stream().forEach(AddressBook::printEachRecord);
         }
     }
 
@@ -264,9 +246,9 @@ public class AddressBook {
         }
         for (String k : commonDict.keySet()) {
             List<Person> v = commonDict.get(k);
-                System.out.println(k);
-                PrintMailinglabelformat(v);
-                System.out.println("\n");
+            System.out.println(k);
+            v.stream().forEach(AddressBook::printEachRecord);
+            System.out.println("\n");
         }
     }
 

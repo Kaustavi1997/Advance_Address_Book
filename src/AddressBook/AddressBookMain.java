@@ -35,7 +35,11 @@ public class AddressBookMain {
             int a = utility.scanner.nextInt();
             switch (a) {
                 case 1 -> {
-                    addressBook.addPerson();
+                    try {
+                        addressBook.addPerson();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 case 2 -> {
                     addressBook.editPerson();
@@ -43,7 +47,6 @@ public class AddressBookMain {
                 }
                 case 3 -> {
                     addressBook.deletePerson();
-                    System.out.println("Deleted Successfully");
                 }
                 case 4 -> {
                     addressBook.sort();
@@ -54,7 +57,7 @@ public class AddressBookMain {
                 case 6 -> {
                     takingInputsForSearching();
                 }
-                case 7 -> addressBook.PrintMailinglabelformat(addressBook.records);
+                case 7 -> addressBook.records.stream().forEach(AddressBook::printEachRecord);
                 case 8 -> {
                     System.out.println("Quitting!");
                     System.exit(0);
