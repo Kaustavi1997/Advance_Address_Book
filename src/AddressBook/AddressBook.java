@@ -162,20 +162,20 @@ public class AddressBook {
     }
 
     public void sortByName() {
-        records.stream().sorted((o1, o2)->o1.getFirstName().
-                compareTo(o2.getFirstName())).forEach(AddressBook::printEachRecord);
+        records.stream().sorted((person1, person2)->person1.getFirstName().
+                compareTo(person2.getFirstName())).forEach(AddressBook::printEachRecord);
     }
     public void sortByState() {
-        records.stream().sorted((o1, o2)->o1.getAddress().getState().
-                compareTo(o2.getAddress().getState())).forEach(AddressBook::printEachRecord);
+        records.stream().sorted((person1, person2)->person1.getAddress().getState().
+                compareTo(person2.getAddress().getState())).forEach(AddressBook::printEachRecord);
     }
     public void sortByZip() {
-        records.stream().sorted((o1, o2)->o1.getAddress().getZip() - o2.getAddress().getZip()).
+        records.stream().sorted((person1, person2)->person1.getAddress().getZip() - person2.getAddress().getZip()).
                 forEach(AddressBook::printEachRecord);
     }
     public void sortByCity() {
-        records.stream().sorted((o1, o2)->o1.getAddress().getCity().
-                compareTo(o2.getAddress().getCity())).forEach(AddressBook::printEachRecord);
+        records.stream().sorted((person1, person2)->person1.getAddress().getCity().
+                compareTo(person2.getAddress().getCity())).forEach(AddressBook::printEachRecord);
 
     }
     public void sort() {
@@ -223,7 +223,7 @@ public class AddressBook {
                 }
             }
         }
-        if(!found){ //found != true
+        if(!found){
             if(choice == 0) {
                 System.out.println("Person not found in given city");
             }
