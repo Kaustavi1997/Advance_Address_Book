@@ -72,7 +72,7 @@ public class AddressBook {
     }
 
     public int findIndex(String phoneNo){
-        int index=-1;
+        int index = -1;
         for (int i = 0; i < records.size(); i++){
             String phoneNoTemporary = records.get(i).getPhoneNo();
             if(phoneNoTemporary.equals(phoneNo)) {
@@ -85,7 +85,7 @@ public class AddressBook {
     public void editPerson() {
         System.out.println("Edit");
         System.out.println("Enter phone number:");
-        String phoneNo= utility.scanner.nextLine();
+        String phoneNo = utility.scanner.nextLine();
         int index = findIndex(phoneNo);
         if (index == -1) {
             System.out.println("Entry not found!");
@@ -203,13 +203,13 @@ public class AddressBook {
     }
 
     public void searchInCityOrState(String firstName,String value,int choice){
-        boolean found=false;
+        boolean found = false;
         Map<String, List<Person>> commonDict;
-        if(choice==0){
-            commonDict= personByCityDictionary;
+        if(choice == 0){
+            commonDict = personByCityDictionary;
         }
         else{
-            commonDict= personByStateDictionary;
+            commonDict = personByStateDictionary;
         }
         List<Person> foundPersons = new ArrayList<Person> ();
         for (String k : commonDict.keySet()) {
@@ -223,8 +223,8 @@ public class AddressBook {
                 }
             }
         }
-        if(!found){ //found != true)
-            if(choice==0) {
+        if(!found){ //found != true
+            if(choice == 0) {
                 System.out.println("Person not found in given city");
             }
             else{
@@ -238,7 +238,7 @@ public class AddressBook {
 
     public void viewByCityOrState(int choice){
         Map<String, List<Person>> commonDict;
-        if(choice==0){
+        if(choice == 0){
             commonDict = personByCityDictionary;
         }
         else{
