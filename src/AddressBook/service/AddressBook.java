@@ -2,8 +2,10 @@ package AddressBook.service;
 import AddressBook.model.*;
 import AddressBook.utility.Utility;
 
+
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class AddressBook {
     Utility utility = new Utility();
@@ -14,8 +16,8 @@ public class AddressBook {
 
     public static final String FIRST_NAME_PATTERN = "^[A-Z]{1}[a-z]{2,}$";
     public static final String LAST_NAME_PATTERN = "^[A-Z]{1}[a-z]{2,}$";
-    public static final String CITY_PATTERN = "[a-z]$";
-    public static final String STATE_PATTERN = "[a-z]$";
+    public static final String CITY_PATTERN = "[a-z]{2,}$";
+    public static final String STATE_PATTERN = "[a-z]{2,}$";
     public static final String PHONE_NO_PATTERN = "^[0-9]{10}$";
 
     public boolean checkValidity(String regex,String value){
@@ -174,12 +176,12 @@ public class AddressBook {
         System.out.println("Delete");
         System.out.println("Enter phone number:");
         String phoneNo= utility.scanner.nextLine();
-        int index = findIndex(phoneNo);
-        if (index == -1) {
-            System.out.println("Entry not found!");
-            return;
+        int initialSize=records.size();
+        records=records.stream().filter(n -> !n.getPhoneNo().equals(phoneNo)).collect(Collectors.toList());
+        if (records.size() == initialSize){
+            System.out.println("Entry Not found!");
         }
-        records.remove(index);
+
         System.out.println("Deleted Successfully");
     }
     public static void printEachRecord(Person record){
