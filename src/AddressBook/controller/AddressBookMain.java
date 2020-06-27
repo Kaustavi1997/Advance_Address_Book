@@ -1,5 +1,5 @@
-package AddressBook.Controller;
-import AddressBook.Service.AddressBook;
+package AddressBook.controller;
+import AddressBook.service.AddressBook;
 import AddressBook.utility.Utility;
 
 public class AddressBookMain {

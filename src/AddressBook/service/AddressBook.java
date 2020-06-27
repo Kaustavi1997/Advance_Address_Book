@@ -1,8 +1,9 @@
-package AddressBook.Service;
+package AddressBook.service;
 import AddressBook.model.*;
 import AddressBook.utility.Utility;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class AddressBook {
     Utility utility = new Utility();
@@ -10,22 +11,50 @@ public class AddressBook {
     Map<String, Boolean> phoneNoDictionary = new HashMap<>();
     Map<String, List<Person>> personByCityDictionary = new HashMap<>();
     Map<String, List<Person>> personByStateDictionary = new HashMap<>();
+
+    public static final String FIRST_NAME_PATTERN = "^[A-Z]{1}[a-z]{2,}$";
+    public static final String LAST_NAME_PATTERN = "^[A-Z]{1}[a-z]{2,}$";
+    public static final String CITY_PATTERN = "[a-z]$";
+    public static final String STATE_PATTERN = "[a-z]$";
+    public static final String PHONE_NO_PATTERN = "^[0-9]{10}$";
+
+    public boolean checkValidity(String regex,String value){
+        if(!Pattern.matches(regex,value))
+            return false;
+        return true;
+    }
+
     public void addPerson() throws Exception {
-        System.out.println("Enter phone no:");
+        System.out.println("Enter phone no(10 digits):");
         String phoneNo = utility.scanner.nextLine();
+        if (!checkValidity(PHONE_NO_PATTERN, phoneNo)) {
+            throw new Exception("Enter valid phone number!");
+        }
         if (phoneNoDictionary.containsKey(phoneNo)) {
             System.out.println("Entry already exists! Can't add!");
         } else {
-            System.out.println("Enter first name:");
+            System.out.println("Enter first name(first letter is capital others small):");
             String firstName = utility.scanner.nextLine();
-            System.out.println("Enter last name:");
+            if (!checkValidity(FIRST_NAME_PATTERN, firstName)) {
+                throw new Exception("Enter valid firstname!");
+            }
+            System.out.println("Enter last name(first letter is capital others small):");
             String lastName = utility.scanner.nextLine();
+            if (!checkValidity(LAST_NAME_PATTERN, lastName)) {
+                throw new Exception("Enter valid lastname!");
+            }
             System.out.println("Enter address:");
             String address = utility.scanner.nextLine();
-            System.out.println("Enter city:");
+            System.out.println("Enter city(small letters):");
             String city = utility.scanner.nextLine();
-            System.out.println("Enter state:");
+            if (!checkValidity(CITY_PATTERN, city)) {
+                throw new Exception("Enter valid city!");
+            }
+            System.out.println("Enter state(small letters):");
             String state = utility.scanner.nextLine();
+            if (!checkValidity(STATE_PATTERN, state)) {
+                throw new Exception("Enter valid state!");
+            }
             System.out.println("Enter zip:");
             int zip;
             try {
@@ -145,7 +174,6 @@ public class AddressBook {
         System.out.println("Delete");
         System.out.println("Enter phone number:");
         String phoneNo= utility.scanner.nextLine();
-
         int index = findIndex(phoneNo);
         if (index == -1) {
             System.out.println("Entry not found!");
