@@ -1,4 +1,6 @@
-package AddressBook;
+package AddressBook.Controller;
+import AddressBook.Service.AddressBook;
+import AddressBook.utility.Utility;
 
 public class AddressBookMain {
     AddressBook addressBook = new AddressBook();

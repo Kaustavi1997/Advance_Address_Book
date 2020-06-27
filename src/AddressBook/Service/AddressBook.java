@@ -1,9 +1,12 @@
-package AddressBook;
+package AddressBook.Service;
+import AddressBook.model.*;
+import AddressBook.utility.Utility;
+
 import java.util.*;
 
 public class AddressBook {
     Utility utility = new Utility();
-    List<Person> records = new ArrayList<Person> ();
+    public List<Person> records = new ArrayList<Person> ();
     Map<String, Boolean> phoneNoDictionary = new HashMap<>();
     Map<String, List<Person>> personByCityDictionary = new HashMap<>();
     Map<String, List<Person>> personByStateDictionary = new HashMap<>();
@@ -43,7 +46,7 @@ public class AddressBook {
             System.out.println("Added Successfully");
         }
     }
-    public void addPersonCityWise(String city,Person person){
+    public void addPersonCityWise(String city, Person person){
         if (personByCityDictionary.containsKey(city)) {
             List<Person> existingList;
             existingList = personByCityDictionary.get(city);
@@ -56,7 +59,7 @@ public class AddressBook {
             personByCityDictionary.put(city,emptyList);
         }
     }
-    public void addPersonStateWise(String state,Person person){
+    public void addPersonStateWise(String state, Person person){
         if (personByStateDictionary.containsKey(state)) {
             List<Person> existingList;
             existingList = personByStateDictionary.get(state);
